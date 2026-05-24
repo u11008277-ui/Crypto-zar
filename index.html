@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CryptoLearn Pro</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -17,26 +15,15 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Inter',sans-serif;
-}
-
-:root{
---bg1:#0f172a;
---bg2:#020617;
---card:rgba(255,255,255,.06);
---border:rgba(255,255,255,.08);
---text:#fff;
---muted:#94a3b8;
---blue:#3b82f6;
---green:#10b981;
---red:#ef4444;
+-webkit-tap-highlight-color:transparent;
 }
 
 body{
-background:linear-gradient(180deg,var(--bg1),var(--bg2));
-color:var(--text);
+background:#0b1020;
+color:white;
 overflow-x:hidden;
 padding-bottom:100px;
-transition:.5s;
+transition:.4s;
 }
 
 body::before{
@@ -44,10 +31,15 @@ content:'';
 position:fixed;
 inset:0;
 background:
-radial-gradient(circle at top left,rgba(59,130,246,.18),transparent 30%),
-radial-gradient(circle at bottom right,rgba(37,99,235,.12),transparent 30%);
-pointer-events:none;
+radial-gradient(circle at top left,rgba(59,130,246,.12),transparent 30%),
+radial-gradient(circle at bottom right,rgba(99,102,241,.12),transparent 30%);
 z-index:-1;
+}
+
+.glass{
+background:rgba(255,255,255,.04);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.06);
 }
 
 .loading{
@@ -65,7 +57,7 @@ z-index:999999;
 width:90px;
 height:90px;
 border-radius:50%;
-border:6px solid rgba(255,255,255,.1);
+border:6px solid rgba(255,255,255,.08);
 border-top-color:#3b82f6;
 animation:spin 1s linear infinite;
 margin-bottom:20px;
@@ -80,14 +72,14 @@ transform:rotate(360deg);
 .topbar{
 position:sticky;
 top:0;
-z-index:100;
 padding:18px 20px;
-backdrop-filter:blur(20px);
-background:rgba(15,23,42,.7);
-border-bottom:1px solid rgba(255,255,255,.05);
 display:flex;
 justify-content:space-between;
 align-items:center;
+background:rgba(11,16,32,.7);
+backdrop-filter:blur(18px);
+z-index:999;
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .logo{
@@ -95,10 +87,14 @@ font-size:1.4rem;
 font-weight:800;
 }
 
-.glass{
-background:var(--card);
-border:1px solid var(--border);
-backdrop-filter:blur(16px);
+.market-header{
+padding:20px;
+}
+
+.market-title{
+font-size:2rem;
+font-weight:800;
+margin-top:10px;
 }
 
 .balance-card{
@@ -110,77 +106,123 @@ box-shadow:0 20px 50px rgba(37,99,235,.25);
 }
 
 .balance-card h1{
-font-size:2.2rem;
+font-size:2.4rem;
 margin-top:10px;
 }
 
-.learn-box{
-margin:20px;
-padding:22px;
-border-radius:28px;
-line-height:1.9;
-}
-
-.learn-box h2{
-margin-bottom:15px;
-}
-
-.section-title{
-padding:0 20px;
-margin-top:10px;
-margin-bottom:10px;
-font-size:1.3rem;
-font-weight:700;
-}
-
-.coin-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
+.coin-list{
+padding:15px;
+display:flex;
+flex-direction:column;
 gap:15px;
-padding:20px;
 }
 
 .coin-card{
 padding:18px;
-border-radius:26px;
-cursor:pointer;
-transition:.3s;
-}
-
-.coin-card:hover{
-transform:translateY(-6px);
-}
-
-.coin-top{
+border-radius:28px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:14px;
+cursor:pointer;
+transition:.2s;
+position:relative;
+overflow:hidden;
 }
 
-.coin-logo{
-width:52px;
-height:52px;
-border-radius:18px;
+.coin-card:active{
+transform:scale(.96);
+}
+
+.coin-card::before{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+transform:translateX(-100%);
+transition:1s;
+}
+
+.coin-card:hover::before{
+transform:translateX(100%);
+}
+
+.coin-left{
 display:flex;
 align-items:center;
-justify-content:center;
-background:rgba(255,255,255,.08);
-font-size:1.4rem;
+gap:14px;
+}
+
+.coin-icon{
+width:54px;
+height:54px;
+border-radius:50%;
+object-fit:cover;
+background:white;
+padding:6px;
+}
+
+.coin-name{
+font-size:1rem;
+font-weight:700;
+}
+
+.coin-symbol{
+font-size:.85rem;
+color:#94a3b8;
+margin-top:4px;
 }
 
 .coin-price{
-font-size:1.3rem;
 font-weight:700;
-margin-top:12px;
+font-size:1rem;
+text-align:right;
 }
 
 .green{
-color:var(--green);
+color:#22c55e;
 }
 
 .red{
-color:var(--red);
+color:#ef4444;
+}
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+width:100%;
+display:flex;
+justify-content:space-around;
+padding:14px 0;
+background:rgba(11,16,32,.95);
+backdrop-filter:blur(18px);
+border-top:1px solid rgba(255,255,255,.05);
+z-index:999;
+}
+
+.nav-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:6px;
+color:#94a3b8;
+font-size:.8rem;
+cursor:pointer;
+transition:.2s;
+}
+
+.nav-item.active{
+color:white;
+}
+
+.nav-item:active{
+transform:scale(.92);
+}
+
+.nav-icon{
+width:24px;
+height:24px;
+object-fit:contain;
+filter:brightness(10);
 }
 
 .page{
@@ -189,93 +231,6 @@ display:none;
 
 .page.active{
 display:block;
-}
-
-.bottom-nav{
-position:fixed;
-bottom:0;
-width:100%;
-background:rgba(15,23,42,.92);
-backdrop-filter:blur(20px);
-border-top:1px solid rgba(255,255,255,.05);
-display:flex;
-justify-content:space-around;
-padding:14px 0;
-z-index:999;
-}
-
-.nav-item{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:4px;
-font-size:.82rem;
-color:#94a3b8;
-cursor:pointer;
-}
-
-.nav-item.active{
-color:#fff;
-}
-
-.detail-page{
-position:fixed;
-inset:0;
-background:#020617;
-z-index:99999;
-overflow:auto;
-display:none;
-padding-bottom:120px;
-}
-
-.detail-header{
-padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.close-btn{
-padding:10px 18px;
-border:none;
-border-radius:14px;
-background:#ef4444;
-color:#fff;
-font-weight:700;
-}
-
-.chart-box{
-margin:20px;
-padding:20px;
-border-radius:28px;
-}
-
-.buy-box{
-margin:20px;
-padding:25px;
-border-radius:28px;
-}
-
-.buy-box input{
-width:100%;
-padding:15px;
-margin-top:15px;
-border:none;
-border-radius:16px;
-background:#1e293b;
-color:#fff;
-}
-
-.btn{
-width:100%;
-padding:16px;
-margin-top:18px;
-border:none;
-border-radius:18px;
-font-weight:700;
-background:linear-gradient(135deg,#2563eb,#3b82f6);
-color:#fff;
-cursor:pointer;
 }
 
 .profile-card{
@@ -287,81 +242,231 @@ border-radius:28px;
 .input{
 width:100%;
 padding:15px;
-margin-top:14px;
 border:none;
 border-radius:16px;
-background:#1e293b;
-color:#fff;
+background:#182033;
+color:white;
+margin-top:14px;
 }
 
-.theme-grid{
-display:flex;
-gap:12px;
-margin-top:20px;
-flex-wrap:wrap;
-}
-
-.theme{
-width:45px;
-height:45px;
-border-radius:50%;
-border:3px solid #fff;
+.btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+margin-top:18px;
+font-weight:700;
 cursor:pointer;
+background:linear-gradient(135deg,#2563eb,#3b82f6);
+color:white;
+transition:.2s;
+position:relative;
+overflow:hidden;
+}
+
+.btn:active{
+transform:scale(.95);
+}
+
+.sell-btn{
+background:linear-gradient(135deg,#ef4444,#dc2626);
+}
+
+.reward-card{
+margin-top:25px;
+padding:24px;
+border-radius:30px;
+background:linear-gradient(135deg,#111827,#1f2937);
+position:relative;
+overflow:hidden;
+}
+
+.reward-card::before{
+content:'';
+position:absolute;
+width:200px;
+height:200px;
+background:rgba(59,130,246,.12);
+border-radius:50%;
+top:-100px;
+right:-100px;
 }
 
 .reward-btn{
+margin-top:18px;
+padding:15px;
+width:100%;
+border:none;
+border-radius:18px;
 background:linear-gradient(135deg,#10b981,#22c55e);
+color:white;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
+}
+
+.reward-btn:active{
+transform:scale(.95);
+}
+
+.reward-btn:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+.timer{
+margin-top:14px;
+font-size:.95rem;
+color:#94a3b8;
 }
 
 .portfolio-item{
 padding:18px;
-border-radius:20px;
-margin-top:15px;
-}
-
-.news-card{
-margin:20px;
-padding:22px;
-border-radius:26px;
-}
-
-.news-card h3{
-margin-bottom:10px;
-}
-
-.toast{
-position:fixed;
-top:20px;
-right:20px;
-padding:16px 20px;
-background:#10b981;
-border-radius:16px;
-display:none;
-z-index:999999;
-}
-
-.market-stats{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-padding:20px;
-}
-
-.stat{
-padding:20px;
 border-radius:24px;
+margin-top:15px;
+cursor:pointer;
+transition:.2s;
 }
 
-.stat h2{
+.portfolio-item:active{
+transform:scale(.97);
+}
+
+.detail-page{
+position:fixed;
+inset:0;
+background:#0b1020;
+z-index:99999;
+display:none;
+overflow:auto;
+padding-bottom:120px;
+}
+
+.chart-top{
+padding:25px;
+}
+
+.chart-price{
+font-size:2.2rem;
+font-weight:800;
 margin-top:10px;
 }
 
-@media(max-width:700px){
-
-.coin-grid{
-grid-template-columns:1fr 1fr;
+.chart-box{
+margin:20px;
+padding:20px;
+border-radius:30px;
 }
 
+.buy-box{
+margin:20px;
+padding:24px;
+border-radius:30px;
+}
+
+.buy-box input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:16px;
+background:#182033;
+color:white;
+margin-top:15px;
+}
+
+.close-btn{
+padding:12px 18px;
+border:none;
+border-radius:16px;
+background:#ef4444;
+color:white;
+font-weight:700;
+}
+
+.success-popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999999;
+backdrop-filter:blur(10px);
+}
+
+.success-card{
+width:320px;
+background:white;
+color:#111827;
+border-radius:30px;
+padding:35px 25px;
+text-align:center;
+animation:popup .4s ease;
+}
+
+.success-check{
+width:90px;
+height:90px;
+border-radius:50%;
+border:5px solid #22c55e;
+margin:auto;
+position:relative;
+margin-bottom:20px;
+}
+
+.success-check::before{
+content:'';
+position:absolute;
+width:18px;
+height:40px;
+border-right:5px solid #22c55e;
+border-bottom:5px solid #22c55e;
+transform:rotate(45deg);
+left:28px;
+top:15px;
+}
+
+.success-btn{
+padding:14px 28px;
+border:none;
+border-radius:16px;
+background:#6366f1;
+color:white;
+font-weight:700;
+cursor:pointer;
+margin-top:20px;
+}
+
+@keyframes popup{
+from{
+transform:scale(.7);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.profile-photo{
+width:110px;
+height:110px;
+border-radius:50%;
+background:linear-gradient(135deg,#2563eb,#3b82f6);
+margin:auto;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:2rem;
+font-weight:800;
+overflow:hidden;
+cursor:pointer;
+background-size:cover;
+background-position:center;
+}
+
+.profile-upload{
+display:none;
 }
 
 </style>
@@ -371,83 +476,50 @@ grid-template-columns:1fr 1fr;
 
 <div class="loading" id="loading">
 <div class="loader"></div>
-<h2>Loading CryptoLearn Pro...</h2>
+<h2>Loading CryptoLearn...</h2>
 </div>
 
-<div class="toast" id="toast">
-Berhasil membeli coin 🚀
+<div class="success-popup" id="successPopup">
+<div class="success-card">
+<div class="success-check"></div>
+<h2 id="popupTitle">Berhasil!</h2>
+<p id="popupText">Data berhasil disimpan</p>
+<button class="success-btn" onclick="closePopup()">Oke</button>
+</div>
 </div>
 
 <div class="topbar">
 <div class="logo">CryptoLearn</div>
-<div>📈</div>
+
+<img class="nav-icon"
+src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png">
+
 </div>
 
 <!-- HOME -->
 <div class="page active" id="homePage">
 
+<div class="market-header">
+
+<p style="color:#94a3b8;">
+Belajar Crypto Modern
+</p>
+
+<div class="market-title">
+Crypto Market
+</div>
+
+</div>
+
 <div class="balance-card">
 <p>Saldo Virtual</p>
 <h1 id="balance">$10000</h1>
-<p style="margin-top:10px;">Belajar crypto tanpa resiko uang asli</p>
-</div>
-
-<div class="learn-box glass">
-<h2>📚 Cara Menggunakan</h2>
-
-<p>
-1. Pilih coin di market.<br><br>
-
-2. Klik coin untuk melihat grafik realtime.<br><br>
-
-3. Pelajari naik turunnya market crypto.<br><br>
-
-4. Gunakan saldo virtual untuk membeli coin.<br><br>
-
-5. Claim daily reward setiap hari.<br><br>
-
-6. Semua fitur dibuat untuk belajar crypto dengan mudah dipahami pemula.
-</p>
-
-</div>
-
-<h2 class="section-title">
-🔥 Market Crypto
-</h2>
-
-<div class="market-stats">
-
-<div class="stat glass">
-<p>Fear & Greed</p>
-<h2 class="green">74</h2>
-</div>
-
-<div class="stat glass">
-<p>BTC Dominance</p>
-<h2>58%</h2>
-</div>
-
-</div>
-
-<div class="coin-grid" id="coinGrid"></div>
-
-<h2 class="section-title">
-📰 Berita Crypto
-</h2>
-
-<div class="news-card glass">
-<h3>Bitcoin Menguat Hari Ini</h3>
-<p style="color:#94a3b8;">
-Bitcoin kembali naik setelah market menunjukkan sentimen positif.
+<p style="margin-top:10px;">
+Belajar crypto dengan simulasi market modern
 </p>
 </div>
 
-<div class="news-card glass">
-<h3>Ethereum ETF Ramai</h3>
-<p style="color:#94a3b8;">
-Volume perdagangan Ethereum meningkat signifikan minggu ini.
-</p>
-</div>
+<div class="coin-list" id="coinList"></div>
 
 </div>
 
@@ -455,7 +527,8 @@ Volume perdagangan Ethereum meningkat signifikan minggu ini.
 <div class="page" id="portfolioPage">
 
 <div class="profile-card glass">
-<h2>🪙 Coin Yang Dimiliki</h2>
+
+<h2>Coin Yang Dimiliki</h2>
 
 <div id="portfolioList"></div>
 
@@ -468,55 +541,66 @@ Volume perdagangan Ethereum meningkat signifikan minggu ini.
 
 <div class="profile-card glass">
 
-<h2>👤 Profil</h2>
+<label for="profileUpload">
 
-<input class="input" id="nameInput" placeholder="Nama">
+<div class="profile-photo" id="profilePhoto">
+CL
+</div>
 
-<input class="input" id="gmailInput" placeholder="Gmail">
+</label>
 
-<input class="input" id="ageInput" placeholder="Umur">
+<input type="file"
+accept="image/*"
+id="profileUpload"
+class="profile-upload">
 
-<button class="btn" onclick="saveProfile()">
+<h2 style="margin-top:25px;">
+Profil
+</h2>
+
+<input class="input"
+id="nameInput"
+placeholder="Nama">
+
+<input class="input"
+id="gmailInput"
+placeholder="contoh@gmail.com">
+
+<input class="input"
+id="ageInput"
+placeholder="Umur">
+
+<button class="btn"
+onclick="saveProfile()">
 Simpan Profil
 </button>
 
 <h2 style="margin-top:30px;">
-💰 Saldo
+Saldo
 </h2>
 
 <h1 id="profileBalance">
 $10000
 </h1>
 
-<button class="btn reward-btn" onclick="dailyReward()">
-🎁 Claim Daily Reward
+<div class="reward-card">
+
+<h3>Daily Reward</h3>
+
+<p style="margin-top:10px;color:#94a3b8;line-height:1.7;">
+Claim reward setiap 24 jam sekali.
+</p>
+
+<button class="reward-btn"
+id="rewardBtn"
+onclick="dailyReward()">
+Claim Reward
 </button>
 
-<h2 style="margin-top:30px;">
-🎨 Ganti Background
-</h2>
-
-<div class="theme-grid">
-
-<div class="theme"
-style="background:#0f172a"
-onclick="changeTheme('#0f172a','#020617')"></div>
-
-<div class="theme"
-style="background:#111827"
-onclick="changeTheme('#111827','#1e293b')"></div>
-
-<div class="theme"
-style="background:#1e1b4b"
-onclick="changeTheme('#1e1b4b','#312e81')"></div>
-
-<div class="theme"
-style="background:#052e16"
-onclick="changeTheme('#052e16','#14532d')"></div>
-
-<div class="theme"
-style="background:#3f0d12"
-onclick="changeTheme('#3f0d12','#7f1d1d')"></div>
+<div class="timer"
+id="rewardTimer">
+Reward tersedia
+</div>
 
 </div>
 
@@ -524,18 +608,25 @@ onclick="changeTheme('#3f0d12','#7f1d1d')"></div>
 
 </div>
 
-<!-- DETAIL COIN -->
+<!-- DETAIL -->
 <div class="detail-page" id="detailPage">
 
-<div class="detail-header">
+<div class="chart-top">
 
-<h2 id="detailName">
-Bitcoin
-</h2>
-
-<button class="close-btn" onclick="closeCoin()">
-Tutup
+<button class="close-btn"
+onclick="closeCoin()">
+Kembali
 </button>
+
+<h1 id="detailName"
+style="margin-top:20px;">
+Bitcoin
+</h1>
+
+<div class="chart-price"
+id="detailPrice">
+$0
+</div>
 
 </div>
 
@@ -547,47 +638,57 @@ Tutup
 
 <div class="buy-box glass">
 
-<h1 id="detailPrice">
-$0
-</h1>
-
-<p style="color:#94a3b8;margin-top:10px;line-height:1.8;">
-
-Pelajari harga coin melalui grafik realtime simulasi market.
-
-</p>
-
 <input type="number"
 id="buyInput"
 placeholder="Masukkan jumlah dollar">
 
-<button class="btn" onclick="buyCoin()">
-🛒 Beli Coin
+<button class="btn"
+onclick="buyCoin()">
+Beli Coin
+</button>
+
+<button class="btn sell-btn"
+id="sellButton"
+style="display:none"
+onclick="sellCoin()">
+Jual Coin
 </button>
 
 </div>
 
 </div>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <div class="bottom-nav">
 
 <div class="nav-item active"
 onclick="showPage('homePage',this)">
-🏠
-<span>Beranda</span>
+
+<img class="nav-icon"
+src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png">
+
+<span>Pasar</span>
+
 </div>
 
 <div class="nav-item"
 onclick="showPage('portfolioPage',this)">
-🪙
+
+<img class="nav-icon"
+src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png">
+
 <span>Coin</span>
+
 </div>
 
 <div class="nav-item"
 onclick="showPage('profilePage',this)">
-👤
+
+<img class="nav-icon"
+src="https://cdn-icons-png.flaticon.com/512/847/847969.png">
+
 <span>Profil</span>
+
 </div>
 
 </div>
@@ -600,88 +701,122 @@ window.onload=()=>{
 
 setTimeout(()=>{
 loading.style.display='none';
-},1800);
+},1400);
+
+loadData();
+
+startRewardTimer();
 
 };
 
 let balance=10000;
-
 let selectedCoin=null;
-
-let portfolio=[];
-
 let chart;
-
 let liveInterval;
+let portfolio=[];
 
 const coins=[
 
-{name:'Bitcoin',symbol:'BTC',emoji:'₿',price:109000,change:'+2.5'},
+{
+name:'Bitcoin',
+symbol:'BTC',
+price:109000,
+change:'+2.5',
+icon:'https://cryptologos.cc/logos/bitcoin-btc-logo.png'
+},
 
-{name:'Ethereum',symbol:'ETH',emoji:'Ξ',price:5200,change:'+4.1'},
+{
+name:'Ethereum',
+symbol:'ETH',
+price:5200,
+change:'+4.1',
+icon:'https://cryptologos.cc/logos/ethereum-eth-logo.png'
+},
 
-{name:'Solana',symbol:'SOL',emoji:'◎',price:240,change:'+7.8'},
+{
+name:'Solana',
+symbol:'SOL',
+price:240,
+change:'+7.8',
+icon:'https://cryptologos.cc/logos/solana-sol-logo.png'
+},
 
-{name:'BNB',symbol:'BNB',emoji:'◈',price:812,change:'+1.1'},
+{
+name:'BNB',
+symbol:'BNB',
+price:812,
+change:'+1.1',
+icon:'https://cryptologos.cc/logos/bnb-bnb-logo.png'
+},
 
-{name:'XRP',symbol:'XRP',emoji:'✕',price:2.8,change:'-0.5'},
+{
+name:'XRP',
+symbol:'XRP',
+price:2.8,
+change:'-0.5',
+icon:'https://cryptologos.cc/logos/xrp-xrp-logo.png'
+},
 
-{name:'Dogecoin',symbol:'DOGE',emoji:'Ð',price:0.42,change:'+11'},
+{
+name:'Dogecoin',
+symbol:'DOGE',
+price:0.42,
+change:'+11',
+icon:'https://cryptologos.cc/logos/dogecoin-doge-logo.png'
+},
 
-{name:'Pepe',symbol:'PEPE',emoji:'🐸',price:0.000021,change:'+18'},
-
-{name:'Cardano',symbol:'ADA',emoji:'₳',price:1.12,change:'+3.5'},
-
-{name:'Avalanche',symbol:'AVAX',emoji:'🔺',price:48,change:'+2.1'},
-
-{name:'Chainlink',symbol:'LINK',emoji:'⬡',price:28,change:'+4.7'},
-
-{name:'Toncoin',symbol:'TON',emoji:'💎',price:8.2,change:'+1.2'},
-
-{name:'Litecoin',symbol:'LTC',emoji:'Ł',price:130,change:'+0.8'},
-
-{name:'Polkadot',symbol:'DOT',emoji:'⚫',price:12,change:'+1.5'},
-
-{name:'Shiba Inu',symbol:'SHIB',emoji:'🐕',price:0.00004,change:'+14'}
+{
+name:'Pepe',
+symbol:'PEPE',
+price:0.000021,
+change:'+18',
+icon:'https://cryptologos.cc/logos/pepe-pepe-logo.png'
+}
 
 ];
 
-const grid=document.getElementById('coinGrid');
+const list=document.getElementById('coinList');
 
 coins.forEach(c=>{
 
-grid.innerHTML+=`
+list.innerHTML+=`
 
 <div class="coin-card glass"
-onclick='openCoin(${JSON.stringify(c)})'>
+onclick='openCoin(${JSON.stringify(c)},false)'>
 
-<div class="coin-top">
+<div class="coin-left">
+
+<img class="coin-icon"
+src="${c.icon}">
 
 <div>
 
-<h3>${c.name}</h3>
+<div class="coin-name">
+${c.name}
+</div>
 
-<p style="color:#94a3b8;">
+<div class="coin-symbol">
 ${c.symbol}
-</p>
-
-</div>
-
-<div class="coin-logo">
-${c.emoji}
 </div>
 
 </div>
+
+</div>
+
+<div>
 
 <div class="coin-price">
 $${c.price}
 </div>
 
-<p class="${c.change.includes('-')?'red':'green'}">
+<div class="${c.change.includes('-')?'red':'green'}"
+style="margin-top:6px;font-size:.9rem;text-align:right;">
 
 ${c.change}%
 
-</p>
+</div>
+
+</div>
 
 </div>
 
@@ -705,15 +840,20 @@ el.classList.add('active');
 
 }
 
-function openCoin(coin){
+function openCoin(coin,owned=false){
 
 selectedCoin=coin;
 
 document.getElementById('detailPage').style.display='block';
 
-document.getElementById('detailName').innerText=coin.name;
+document.getElementById('detailName').innerText=
+coin.name;
 
-document.getElementById('detailPrice').innerText='$'+coin.price;
+document.getElementById('detailPrice').innerText=
+'$'+coin.price;
+
+document.getElementById('sellButton').style.display=
+owned?'block':'none';
 
 const ctx=document.getElementById('coinChart');
 
@@ -723,9 +863,9 @@ chart.destroy();
 
 let prices=[
 coin.price*.9,
-coin.price*.95,
+coin.price,
 coin.price*1.1,
-coin.price*.97,
+coin.price*.95,
 coin.price
 ];
 
@@ -749,7 +889,9 @@ fill:true,
 
 borderWidth:4,
 
-tension:.4
+tension:.4,
+
+pointRadius:0
 
 }]
 
@@ -757,22 +899,15 @@ tension:.4
 
 options:{
 
-responsive:true,
-
 plugins:{
 legend:{display:false}
 },
 
 scales:{
-
-x:{
-ticks:{color:'#fff'}
-},
-
+x:{display:false},
 y:{
 ticks:{color:'#fff'}
 }
-
 }
 
 }
@@ -791,13 +926,13 @@ let newPrice=last+random;
 
 prices.push(newPrice);
 
-if(prices.length>15){
+if(prices.length>20){
 prices.shift();
 }
 
 chart.data.labels.push('');
 
-if(chart.data.labels.length>15){
+if(chart.data.labels.length>20){
 chart.data.labels.shift();
 }
 
@@ -828,7 +963,10 @@ document.getElementById('buyInput').value
 
 if(!amount || amount<=0){
 
-alert('Masukkan jumlah');
+showPopup(
+'Gagal',
+'Masukkan jumlah'
+);
 
 return;
 
@@ -836,7 +974,10 @@ return;
 
 if(amount>balance){
 
-alert('Saldo tidak cukup');
+showPopup(
+'Gagal',
+'Saldo tidak cukup'
+);
 
 return;
 
@@ -847,18 +988,105 @@ balance-=amount;
 portfolio.push({
 
 name:selectedCoin.name,
-
+symbol:selectedCoin.symbol,
 amount:amount,
-
-symbol:selectedCoin.symbol
+price:selectedCoin.price,
+icon:selectedCoin.icon
 
 });
+
+saveData();
 
 updateBalance();
 
 renderPortfolio();
 
-showToast();
+showPopup(
+'Berhasil!',
+'Berhasil membeli '+selectedCoin.name
+);
+
+}
+
+function sellCoin(){
+
+const index=portfolio.findIndex(
+p=>p.name===selectedCoin.name
+);
+
+if(index===-1){
+return;
+}
+
+balance+=portfolio[index].amount;
+
+portfolio.splice(index,1);
+
+saveData();
+
+updateBalance();
+
+renderPortfolio();
+
+closeCoin();
+
+showPopup(
+'Berhasil!',
+'Coin berhasil dijual'
+);
+
+}
+
+function renderPortfolio(){
+
+const list=document.getElementById('portfolioList');
+
+list.innerHTML='';
+
+if(portfolio.length===0){
+
+list.innerHTML=
+'<p style="margin-top:15px;color:#94a3b8;">Belum memiliki coin</p>';
+
+return;
+
+}
+
+portfolio.forEach(p=>{
+
+list.innerHTML+=`
+
+<div class="portfolio-item glass"
+onclick='openCoin(${JSON.stringify(p)},true)'>
+
+<div class="coin-left">
+
+<img class="coin-icon"
+src="${p.icon}">
+
+<div>
+
+<div class="coin-name">
+${p.name}
+</div>
+
+<div class="coin-symbol">
+${p.symbol}
+</div>
+
+</div>
+
+</div>
+
+<div class="coin-price">
+$${p.amount}
+</div>
+
+</div>
+
+`;
+
+});
 
 }
 
@@ -872,56 +1100,113 @@ document.getElementById('profileBalance').innerText=
 
 }
 
-function renderPortfolio(){
+function dailyReward(){
 
-const list=document.getElementById('portfolioList');
+const lastClaim=
+localStorage.getItem('lastClaim');
 
-list.innerHTML='';
+const now=Date.now();
 
-if(portfolio.length===0){
+if(lastClaim){
 
-list.innerHTML=
-'<p style="color:#94a3b8;margin-top:15px;">Belum membeli coin</p>';
+const diff=now-lastClaim;
+
+if(diff<86400000){
+return;
+}
+
+}
+
+const reward=
+Math.floor(Math.random()*500)+100;
+
+balance+=reward;
+
+localStorage.setItem(
+'lastClaim',
+now
+);
+
+saveData();
+
+updateBalance();
+
+startRewardTimer();
+
+showPopup(
+'Reward Berhasil!',
+'Kamu mendapatkan $'+reward
+);
+
+}
+
+function startRewardTimer(){
+
+setInterval(()=>{
+
+const lastClaim=
+localStorage.getItem('lastClaim');
+
+const timer=
+document.getElementById('rewardTimer');
+
+const btn=
+document.getElementById('rewardBtn');
+
+if(!lastClaim){
+
+timer.innerText='Reward tersedia';
+
+btn.disabled=false;
 
 return;
 
 }
 
-portfolio.forEach(p=>{
+const now=Date.now();
 
-list.innerHTML+=`
+const diff=86400000-(now-lastClaim);
 
-<div class="portfolio-item glass">
+if(diff<=0){
 
-<h3>${p.name}</h3>
+timer.innerText='Reward tersedia';
 
-<p style="color:#94a3b8;margin-top:8px;">
+btn.disabled=false;
 
-${p.symbol} • Investasi $${p.amount}
-
-</p>
-
-</div>
-
-`;
-
-});
+return;
 
 }
 
-function dailyReward(){
+btn.disabled=true;
 
-let reward=Math.floor(Math.random()*500)+100;
+const h=Math.floor(diff/1000/60/60);
 
-balance+=reward;
+const m=Math.floor(diff/1000/60)%60;
 
-updateBalance();
+const s=Math.floor(diff/1000)%60;
 
-alert('Kamu mendapatkan reward $'+reward);
+timer.innerText=
+`Tunggu ${h}j ${m}m ${s}d`;
+
+},1000);
 
 }
 
 function saveProfile(){
+
+const gmail=
+document.getElementById('gmailInput').value;
+
+if(!gmail.endsWith('@gmail.com')){
+
+showPopup(
+'Gagal',
+'Email harus memakai @gmail.com'
+);
+
+return;
+
+}
 
 localStorage.setItem(
 'name',
@@ -930,7 +1215,7 @@ document.getElementById('nameInput').value
 
 localStorage.setItem(
 'gmail',
-document.getElementById('gmailInput').value
+gmail
 );
 
 localStorage.setItem(
@@ -938,28 +1223,129 @@ localStorage.setItem(
 document.getElementById('ageInput').value
 );
 
-alert('Profil berhasil disimpan');
+showPopup(
+'Berhasil!',
+'Profil berhasil disimpan'
+);
 
 }
 
-function changeTheme(c1,c2){
+function showPopup(title,text){
 
-document.body.style.background=
-`linear-gradient(180deg,${c1},${c2})`;
+document.getElementById('popupTitle').innerText=
+title;
+
+document.getElementById('popupText').innerText=
+text;
+
+document.getElementById('successPopup').style.display=
+'flex';
+
+}
+
+function closePopup(){
+
+document.getElementById('successPopup').style.display=
+'none';
 
 }
 
-function showToast(){
+function saveData(){
 
-const toast=document.getElementById('toast');
+localStorage.setItem(
+'balance',
+balance
+);
 
-toast.style.display='block';
-
-setTimeout(()=>{
-toast.style.display='none';
-},2500);
+localStorage.setItem(
+'portfolio',
+JSON.stringify(portfolio)
+);
 
 }
+
+function loadData(){
+
+const savedBalance=
+localStorage.getItem('balance');
+
+const savedPortfolio=
+localStorage.getItem('portfolio');
+
+if(savedBalance){
+balance=parseFloat(savedBalance);
+}
+
+if(savedPortfolio){
+portfolio=JSON.parse(savedPortfolio);
+}
+
+document.getElementById('nameInput').value=
+localStorage.getItem('name')||'';
+
+document.getElementById('gmailInput').value=
+localStorage.getItem('gmail')||'';
+
+document.getElementById('ageInput').value=
+localStorage.getItem('age')||'';
+
+const profileImage=
+localStorage.getItem('profileImage');
+
+if(profileImage){
+
+const photo=
+document.getElementById('profilePhoto');
+
+photo.style.backgroundImage=
+`url(${profileImage})`;
+
+photo.innerHTML='';
+
+}
+
+updateBalance();
+
+renderPortfolio();
+
+}
+
+document.getElementById('profileUpload')
+.addEventListener('change',function(){
+
+const file=this.files[0];
+
+if(file){
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+const photo=
+document.getElementById('profilePhoto');
+
+photo.style.backgroundImage=
+`url(${e.target.result})`;
+
+photo.innerHTML='';
+
+localStorage.setItem(
+'profileImage',
+e.target.result
+);
+
+showPopup(
+'Berhasil!',
+'Foto profil berhasil diubah'
+);
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+});
 
 updateBalance();
 
